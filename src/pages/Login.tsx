@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { verifyPassword } from '@/lib/security';
 import { getMasterHash, isLoggedIn, setLoggedIn } from '@/lib/storage';
+import { Capacitor } from '@capacitor/core';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,11 +25,16 @@ export default function Login() {
         navigate('/home');
         return;
       }
-      // Check biometric availability (Capacitor plugin on device)
+      // Check biometric availability only on native
       try {
-        // We use dynamic import to avoid build issues if plugin isn't installed
-        // @ts-ignore
-        const { Biometric } = await import('@capawesome/capacitor-biometric');
+        if (!Capacitor.isNativePlatform()) {
+          setBiometricAvailable(false);
+          return;
+        }
+        const modPath = '@capawesome/capacitor-biometric';
+        // @vite-ignore
+        const mod: any = await import(/* @vite-ignore */ modPath);
+        const { Biometric } = mod;
         const res = await Biometric.isAvailable();
         setBiometricAvailable(!!res.isAvailable);
       } catch {
@@ -54,8 +60,13 @@ export default function Login() {
 
   async function handleBiometric() {
     try {
-      // @ts-ignore
-      const { Biometric } = await import('@capawesome/capacitor-biometric');
+      if (!Capacitor.isNativePlatform()) {
+        toast({ title: 'Biometric not available here', description: 'Use password instead.' });
+        return;
+      }
+      const modPath = '@capawesome/capacitor-biometric';
+      const mod: any = await import(/* @vite-ignore */ modPath);
+      const { Biometric } = mod;
       const res = await Biometric.isAvailable();
       if (!res.isAvailable) return;
       const auth = await Biometric.authenticate({ reason: 'Authenticate to unlock KeyGuard Glow' });
