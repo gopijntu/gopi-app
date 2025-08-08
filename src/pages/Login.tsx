@@ -45,10 +45,16 @@ export default function Login() {
 
   async function handlePassword(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formEl = e.currentTarget as HTMLFormElement;
+    const data = new FormData(formEl);
+    const pw = String(data.get('password') || '');
+
     const master = await getMasterHash();
-    if (!master) return navigate('/onboarding');
-    const form = new FormData(e.currentTarget);
-    const pw = String(form.get('password') || '');
+    if (!master) {
+      navigate('/onboarding');
+      return;
+    }
+
     const ok = await verifyPassword(pw, master);
     if (!ok) {
       toast({ title: 'Invalid password' });
