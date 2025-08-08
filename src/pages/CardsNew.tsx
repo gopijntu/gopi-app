@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { isLoggedIn, saveCard } from '@/lib/storage';
 
@@ -21,6 +22,8 @@ export default function CardsNew() {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const data = {
+      bankName: String(fd.get('bankName') || ''),
+      cardType: String(fd.get('cardType') || ''),
       cardNumber: String(fd.get('cardNumber') || ''),
       cvv: String(fd.get('cvv') || ''),
       validTill: String(fd.get('validTill') || ''),
@@ -41,6 +44,22 @@ export default function CardsNew() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="bankName">Bank Name</Label>
+                <Input id="bankName" name="bankName" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cardType">Card Type</Label>
+                <Select name="cardType">
+                  <SelectTrigger id="cardType">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Visa">Visa</SelectItem>
+                    <SelectItem value="MasterCard">MasterCard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="cardNumber">Card Number</Label>
                 <Input id="cardNumber" name="cardNumber" required inputMode="numeric" />

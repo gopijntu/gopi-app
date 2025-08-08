@@ -148,4 +148,12 @@ All colors MUST be HSL.
     border: 1px solid var(--glass-border);
     box-shadow: 0 10px 30px -15px hsl(var(--brand) / 0.25);
   }
+
+  .app-hero {
+    background:
+      radial-gradient(1200px 500px at 10% -10%, hsl(var(--brand) / 0.16), transparent 60%),
+      radial-gradient(1000px 500px at 90% 110%, hsl(var(--brand-2) / 0.16), transparent 60%),
+      linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background)));
+  }
 }
+

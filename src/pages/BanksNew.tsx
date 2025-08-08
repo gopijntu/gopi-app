@@ -23,6 +23,8 @@ export default function BanksNew() {
     const data = {
       recordName: String(fd.get('recordName') || ''),
       bankName: String(fd.get('bankName') || ''),
+      accountNumber: String(fd.get('accountNumber') || ''),
+      cifNo: String(fd.get('cifNo') || ''),
       ifscCode: String(fd.get('ifscCode') || ''),
       username: String(fd.get('username') || ''),
       privy: String(fd.get('privy') || ''),
@@ -43,12 +45,20 @@ export default function BanksNew() {
           <CardContent>
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="recordName">Record Name</Label>
+                <Label htmlFor="recordName">Name</Label>
                 <Input id="recordName" name="recordName" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bankName">Bank Name</Label>
                 <Input id="bankName" name="bankName" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="accountNumber">Account Number</Label>
+                <Input id="accountNumber" name="accountNumber" inputMode="numeric" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cifNo">CIF No</Label>
+                <Input id="cifNo" name="cifNo" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="ifscCode">IFSC Code</Label>

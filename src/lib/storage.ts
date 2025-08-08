@@ -2,8 +2,10 @@ import { Preferences } from '@capacitor/preferences';
 
 export type BankRecord = {
   id: string;
-  recordName: string;
+  recordName: string; // UI label "Name"
   bankName: string;
+  accountNumber?: string;
+  cifNo?: string;
   ifscCode: string;
   username: string;
   privy: string;
@@ -12,6 +14,8 @@ export type BankRecord = {
 
 export type CardRecord = {
   id: string;
+  bankName?: string;
+  cardType?: string; // e.g., Visa, MasterCard
   cardNumber: string;
   cvv: string;
   validTill: string;
@@ -24,6 +28,7 @@ const KEYS = {
   LOGGED_IN: 'kg_logged_in',
   BANKS: 'kg_banks',
   CARDS: 'kg_cards',
+  POLICIES: 'kg_policies',
 };
 
 export async function setMasterHash(hash: string) {
@@ -102,4 +107,35 @@ export async function deleteCard(id: string) {
   const list = await getCards();
   const next = list.filter((r) => r.id !== id);
   await writeJSON(KEYS.CARDS, next);
+}
+
+// Policies
+export type PolicyRecord = {
+  id: string;
+  name: string;
+  renewalDate: string; // ISO or simple string
+  amount: string;
+  createdAt: string;
+};
+
+export async function getPolicies(): Promise<PolicyRecord[]> {
+  return readJSON<PolicyRecord[]>(KEYS.POLICIES, []);
+}
+
+export async function savePolicy(rec: Omit<PolicyRecord, 'id' | 'createdAt'>) {
+  const list = await getPolicies();
+  const next: PolicyRecord = {
+    ...rec,
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+  };
+  list.unshift(next);
+  await writeJSON(KEYS.POLICIES, list);
+  return next;
+}
+
+export async function deletePolicy(id: string) {
+  const list = await getPolicies();
+  const next = list.filter((r) => r.id !== id);
+  await writeJSON(KEYS.POLICIES, next);
 }

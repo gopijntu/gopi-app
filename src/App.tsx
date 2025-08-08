@@ -12,6 +12,8 @@ import BanksList from "@/pages/BanksList";
 import BanksNew from "@/pages/BanksNew";
 import CardsList from "@/pages/CardsList";
 import CardsNew from "@/pages/CardsNew";
+import PoliciesList from "@/pages/PoliciesList";
+import PoliciesNew from "@/pages/PoliciesNew";
 import NotFound from "./pages/NotFound";
 import { getMasterHash, isLoggedIn } from "@/lib/storage";
 
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/banks/new" element={<BanksNew />} />
             <Route path="/cards" element={<CardsList />} />
             <Route path="/cards/new" element={<CardsNew />} />
+            <Route path="/policies" element={<PoliciesList />} />
+            <Route path="/policies/new" element={<PoliciesNew />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

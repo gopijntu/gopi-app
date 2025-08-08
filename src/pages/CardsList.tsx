@@ -54,6 +54,8 @@ export default function CardsList() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Bank</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Card Number</TableHead>
                   <TableHead>CVV</TableHead>
                   <TableHead>Valid Till</TableHead>
@@ -64,8 +66,10 @@ export default function CardsList() {
               <TableBody>
                 {rows.map((r) => (
                   <TableRow key={r.id}>
-                    <TableCell className="cursor-pointer" onClick={() => copy(r.cardNumber)}>{maskCard(r.cardNumber)}</TableCell>
-                    <TableCell className="cursor-pointer" onClick={() => copy(r.cvv)}>***</TableCell>
+                    <TableCell className="cursor-pointer" onClick={() => copy(r.bankName ?? '')}>{r.bankName ?? '-'}</TableCell>
+                    <TableCell className="cursor-pointer" onClick={() => copy(r.cardType ?? '')}>{r.cardType ?? '-'}</TableCell>
+                    <TableCell className="cursor-pointer" onClick={() => copy(r.cardNumber)}>{r.cardNumber}</TableCell>
+                    <TableCell className="cursor-pointer" onClick={() => copy(r.cvv)}>{r.cvv}</TableCell>
                     <TableCell>{r.validTill}</TableCell>
                     <TableCell className="truncate max-w-[200px]">{r.note}</TableCell>
                     <TableCell>

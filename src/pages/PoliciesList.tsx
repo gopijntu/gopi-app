@@ -4,25 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { toast } from '@/hooks/use-toast';
-import { BankRecord, deleteBank, getBanks, isLoggedIn } from '@/lib/storage';
+import { PolicyRecord, deletePolicy, getPolicies, isLoggedIn } from '@/lib/storage';
 import { useNavigate } from 'react-router-dom';
 
-export default function BanksList() {
-  const [rows, setRows] = useState<BankRecord[]>([]);
+export default function PoliciesList() {
+  const [rows, setRows] = useState<PolicyRecord[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       if (!(await isLoggedIn())) return navigate('/login');
-      setRows(await getBanks());
+      setRows(await getPolicies());
     })();
-    document.title = 'Banks • KeyGuard Glow';
+    document.title = 'Policies • KeyGuard Glow';
   }, [navigate]);
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this bank record?')) return;
-    await deleteBank(id);
-    setRows(await getBanks());
+    if (!confirm('Delete this policy?')) return;
+    await deletePolicy(id);
+    setRows(await getPolicies());
     toast({ title: 'Deleted' });
   }
 
@@ -38,36 +38,28 @@ export default function BanksList() {
       <div className="max-w-5xl mx-auto space-y-4">
         <div className="flex items-center justify-between">
           <BackButton />
-          <Button variant="glossy" onClick={() => navigate('/banks/new')}>Create New</Button>
+          <Button variant="glossy" onClick={() => navigate('/policies/new')}>Create New</Button>
         </div>
         <Card className="card-glass">
           <CardHeader>
-            <CardTitle>Banks</CardTitle>
+            <CardTitle>Policies</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Bank</TableHead>
-                  <TableHead>Account No</TableHead>
-                  <TableHead>CIF No</TableHead>
-                  <TableHead>IFSC</TableHead>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Privy</TableHead>
+                  <TableHead>Renewal Date</TableHead>
+                  <TableHead>Amount</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {rows.map((r) => (
                   <TableRow key={r.id}>
-                    <TableCell onClick={() => copy(r.recordName)} className="cursor-pointer">{r.recordName}</TableCell>
-                    <TableCell onClick={() => copy(r.bankName)} className="cursor-pointer">{r.bankName}</TableCell>
-                    <TableCell onClick={() => copy(r.accountNumber ?? '')} className="cursor-pointer">{r.accountNumber ?? '-'}</TableCell>
-                    <TableCell onClick={() => copy(r.cifNo ?? '')} className="cursor-pointer">{r.cifNo ?? '-'}</TableCell>
-                    <TableCell onClick={() => copy(r.ifscCode)} className="cursor-pointer">{r.ifscCode}</TableCell>
-                    <TableCell onClick={() => copy(r.username)} className="cursor-pointer">{r.username}</TableCell>
-                    <TableCell onClick={() => copy(r.privy)} className="cursor-pointer truncate max-w-[200px]">{r.privy}</TableCell>
+                    <TableCell onClick={() => copy(r.name)} className="cursor-pointer">{r.name}</TableCell>
+                    <TableCell onClick={() => copy(r.renewalDate)} className="cursor-pointer">{r.renewalDate}</TableCell>
+                    <TableCell onClick={() => copy(r.amount)} className="cursor-pointer">{r.amount}</TableCell>
                     <TableCell>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Delete</Button>
                     </TableCell>
@@ -76,7 +68,7 @@ export default function BanksList() {
               </TableBody>
             </Table>
             {rows.length === 0 && (
-              <p className="text-sm text-muted-foreground mt-4">No bank records yet.</p>
+              <p className="text-sm text-muted-foreground mt-4">No policies yet.</p>
             )}
           </CardContent>
         </Card>

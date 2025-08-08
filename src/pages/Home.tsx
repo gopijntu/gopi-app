@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Banknote, CreditCard } from 'lucide-react';
+import { Banknote, CreditCard, ShieldCheck } from 'lucide-react';
 import { isLoggedIn } from '@/lib/storage';
 
 export default function Home() {
@@ -15,18 +15,22 @@ export default function Home() {
   }, [navigate]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6">
+    <main className="min-h-screen app-hero flex items-center justify-center p-6">
       <div className="max-w-xl w-full text-center space-y-6">
         <h1 className="text-3xl font-semibold">KeyGuard Glow</h1>
         <p className="text-muted-foreground">Securely manage your bank and card details</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Button variant="glossy" size="xl" className="h-28 flex flex-col" onClick={() => navigate('/banks')}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/banks')}>
             <Banknote className="size-7" />
             Banks
           </Button>
-          <Button variant="glossy" size="xl" className="h-28 flex flex-col" onClick={() => navigate('/cards')}>
+          <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/cards')}>
             <CreditCard className="size-7" />
             Cards
+          </Button>
+          <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/policies')}>
+            <ShieldCheck className="size-7" />
+            Policies
           </Button>
         </div>
       </div>
