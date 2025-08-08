@@ -103,3 +103,49 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  :root {
+    --brand: 262 83% 62%;
+    --brand-2: 280 75% 52%;
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand)) 0%, hsl(var(--brand-2)) 100%);
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --glass-surface: hsl(var(--card) / 0.6);
+    --glass-border: hsl(var(--border) / 0.6);
+  }
+  .dark {
+    --brand: 262 83% 62%;
+    --brand-2: 280 75% 52%;
+    --glass-surface: hsl(var(--card) / 0.35);
+    --glass-border: hsl(var(--border) / 0.35);
+  }
+}
+
+@layer components {
+  .btn-glossy {
+    background-image: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 12px 30px -12px hsl(var(--brand) / 0.45);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-glossy::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, hsl(var(--primary-foreground) / 0.25), transparent 40%);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .btn-glossy:hover { filter: brightness(1.05); }
+  .btn-glossy:active { transform: translateY(1px); }
+
+  .card-glass {
+    background-color: var(--glass-surface);
+    backdrop-filter: saturate(120%) blur(10px);
+    -webkit-backdrop-filter: saturate(120%) blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px -15px hsl(var(--brand) / 0.25);
+  }
+}
