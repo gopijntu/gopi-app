@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { verifyPassword } from '@/lib/security';
-import { getMasterHash, isLoggedIn, setLoggedIn } from '@/lib/storage';
+import { getMasterHash, isLoggedIn, setLoggedIn, resetAllData } from '@/lib/storage';
 import { Capacitor } from '@capacitor/core';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -85,6 +86,12 @@ export default function Login() {
     }
   }
 
+  async function handleReset() {
+    await resetAllData();
+    toast({ title: 'App reset', description: 'Please set a new master password.' });
+    navigate('/onboarding');
+  }
+
   useEffect(() => { document.title = 'Login • KeyGuard Glow'; }, []);
 
   return (
@@ -105,6 +112,23 @@ export default function Login() {
           {biometricAvailable && (
             <Button onClick={handleBiometric} variant="secondary" className="w-full mt-3">Use Fingerprint</Button>
           )}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" className="w-full mt-3">Forgot password? Reset app</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Reset app?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This erases your master password and all saved data (banks, cards, policies). This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleReset}>Reset</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardContent>
       </Card>
     </div>

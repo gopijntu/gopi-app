@@ -139,3 +139,11 @@ export async function deletePolicy(id: string) {
   const next = list.filter((r) => r.id !== id);
   await writeJSON(KEYS.POLICIES, next);
 }
+
+export async function resetAllData() {
+  await Preferences.remove({ key: KEYS.MASTER_HASH });
+  await Preferences.remove({ key: KEYS.LOGGED_IN });
+  await Preferences.remove({ key: KEYS.BANKS });
+  await Preferences.remove({ key: KEYS.CARDS });
+  await Preferences.remove({ key: KEYS.POLICIES });
+}
