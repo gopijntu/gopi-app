@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import BackButton from '@/components/BackButton';
+import LogoutButton from '@/components/LogoutButton';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -44,7 +45,10 @@ export default function CardsList() {
       <div className="max-w-5xl mx-auto space-y-4">
         <div className="flex items-center justify-between">
           <BackButton />
-          <Button variant="glossy" onClick={() => navigate('/cards/new')}>Create New</Button>
+          <div className="flex items-center gap-2">
+            <LogoutButton />
+            <Button variant="glossy" onClick={() => navigate('/cards/new')}>Create New</Button>
+          </div>
         </div>
         <Card className="card-glass">
           <CardHeader>

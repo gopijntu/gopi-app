@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 export default function BackButton() {
   const navigate = useNavigate();
   return (
-    <Button variant="outline" onClick={() => navigate(-1)} className="gap-2">
+    <Button variant="outline" onClick={() => navigate('/home')} className="gap-2">
       <ArrowLeft /> Back
     </Button>
   );

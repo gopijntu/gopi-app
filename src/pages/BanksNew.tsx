@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '@/components/BackButton';
+import LogoutButton from '@/components/LogoutButton';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -37,7 +38,10 @@ export default function BanksNew() {
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-2xl mx-auto space-y-4">
-        <BackButton />
+        <div className="flex items-center justify-between">
+          <BackButton />
+          <LogoutButton />
+        </div>
         <Card className="card-glass">
           <CardHeader>
             <CardTitle>Create New Bank Record</CardTitle>

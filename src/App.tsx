@@ -16,7 +16,7 @@ import PoliciesList from "@/pages/PoliciesList";
 import PoliciesNew from "@/pages/PoliciesNew";
 import NotFound from "./pages/NotFound";
 import { getMasterHash, isLoggedIn } from "@/lib/storage";
-
+import InactivityLogout from "@/components/InactivityLogout";
 const queryClient = new QueryClient();
 
 function StartGate() {
@@ -40,6 +40,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <InactivityLogout />
           <Routes>
             <Route path="/" element={<StartGate />} />
             <Route path="/onboarding" element={<Onboarding />} />
