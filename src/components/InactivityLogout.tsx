@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { isLoggedIn, setLoggedIn } from '@/lib/storage';
+import { isLoggedIn, setLoggedIn, lockVault } from '@/lib/storage';
 import { toast } from '@/hooks/use-toast';
 
 const TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
@@ -14,6 +14,7 @@ export default function InactivityLogout() {
     async function doLogout() {
       if (await isLoggedIn()) {
         await setLoggedIn(false);
+        lockVault();
         toast({ title: 'Logged out due to inactivity' });
         navigate('/login');
       }

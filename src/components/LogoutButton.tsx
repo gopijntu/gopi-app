@@ -1,7 +1,7 @@
 import { LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { setLoggedIn } from '@/lib/storage';
+import { setLoggedIn, lockVault } from '@/lib/storage';
 import { toast } from '@/hooks/use-toast';
 
 export default function LogoutButton() {
@@ -9,6 +9,7 @@ export default function LogoutButton() {
 
   async function handleLogout() {
     await setLoggedIn(false);
+    lockVault();
     toast({ title: 'Logged out' });
     navigate('/login');
   }

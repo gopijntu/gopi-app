@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { verifyPassword } from '@/lib/security';
-import { getMasterHash, isLoggedIn, setLoggedIn, resetAllData } from '@/lib/storage';
+import { getMasterHash, isLoggedIn, setLoggedIn, resetAllData, unlockVaultWithPassword } from '@/lib/storage';
 import { Capacitor } from '@capacitor/core';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
@@ -61,6 +61,14 @@ export default function Login() {
       toast({ title: 'Invalid password' });
       return;
     }
+
+    // Unlock vault with password (offline)
+    const unlocked = await unlockVaultWithPassword(pw);
+    if (!unlocked) {
+      toast({ title: 'Unable to unlock vault', description: 'Please try again.' });
+      return;
+    }
+
     await setLoggedIn(true);
     navigate('/home');
   }
@@ -109,12 +117,13 @@ export default function Login() {
             </div>
             <Button type="submit" className="w-full" variant="glossy" size="lg">Login</Button>
           </form>
+          <Button onClick={() => navigate('/recover')} variant="ghost" className="w-full mt-3">Forgot password? Answer security questions</Button>
           {biometricAvailable && (
             <Button onClick={handleBiometric} variant="secondary" className="w-full mt-3">Use Fingerprint</Button>
           )}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="ghost" className="w-full mt-3">Forgot password? Reset app</Button>
+              <Button variant="ghost" className="w-full mt-3">Reset app (erase all data)</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
