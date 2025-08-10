@@ -63,6 +63,16 @@ export function lockVault() {
   dataKey = null;
 }
 
+export function isVaultUnlocked(): boolean {
+  return dataKey !== null;
+}
+
+export async function hasVaultSetup(): Promise<boolean> {
+  const { value: salt } = await Preferences.get({ key: KEYS.SALT_PW });
+  const { value: wrap } = await Preferences.get({ key: KEYS.WRAPPED_KEY_PW });
+  return !!salt && !!wrap;
+}
+
 export async function getSecurityQuestions(): Promise<{ q1: string; q2: string } | null> {
   const { value } = await Preferences.get({ key: KEYS.QUESTIONS });
   if (!value) return null;

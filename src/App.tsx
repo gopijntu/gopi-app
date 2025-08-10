@@ -19,7 +19,7 @@ import PoliciesNew from "@/pages/PoliciesNew";
 import PoliciesEdit from "@/pages/PoliciesEdit";
 import Recover from "@/pages/Recover";
 import NotFound from "./pages/NotFound";
-import { getMasterHash, isLoggedIn } from "@/lib/storage";
+import { hasVaultSetup, isLoggedIn, isVaultUnlocked } from "@/lib/storage";
 import InactivityLogout from "@/components/InactivityLogout";
 const queryClient = new QueryClient();
 
@@ -27,10 +27,10 @@ function StartGate() {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const master = await getMasterHash();
+      const setup = await hasVaultSetup();
       const logged = await isLoggedIn();
-      if (!master) navigate('/onboarding');
-      else if (!logged) navigate('/login');
+      if (!setup) navigate('/onboarding');
+      else if (!logged || !isVaultUnlocked()) navigate('/login');
       else navigate('/home');
     })();
   }, [navigate]);

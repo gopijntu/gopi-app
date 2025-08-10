@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
-import { verifyPassword } from '@/lib/security';
+
 import { getMasterHash, isLoggedIn, setLoggedIn, resetAllData, unlockVaultWithPassword } from '@/lib/storage';
 import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 export default function Login() {
@@ -56,19 +57,35 @@ export default function Login() {
       return;
     }
 
-    const ok = await verifyPassword(pw, master);
-    if (!ok) {
-      toast({ title: 'Invalid password' });
+    // Rate limiting for unlock attempts (persistent)
+    const now = Date.now();
+    const { value: attemptStr } = await Preferences.get({ key: 'kg_unlock_attempts' });
+    let rec: { count: number; lockUntil?: number } = attemptStr ? JSON.parse(attemptStr) : { count: 0, lockUntil: 0 };
+    if (rec.lockUntil && now < rec.lockUntil) {
+      const secs = Math.ceil((rec.lockUntil - now) / 1000);
+      toast({ title: 'Too many attempts', description: `Try again in ${secs}s` });
       return;
     }
 
     // Unlock vault with password (offline)
     const unlocked = await unlockVaultWithPassword(pw);
     if (!unlocked) {
-      toast({ title: 'Unable to unlock vault', description: 'Please try again.' });
+      rec.count = (rec.count || 0) + 1;
+      if (rec.count >= 5) {
+        const exponent = rec.count - 5;
+        const base = 15000; // 15s base delay
+        const delay = Math.min(5 * 60 * 1000, base * Math.pow(2, exponent)); // cap at 5 minutes
+        rec.lockUntil = now + delay;
+      } else {
+        rec.lockUntil = 0;
+      }
+      await Preferences.set({ key: 'kg_unlock_attempts', value: JSON.stringify(rec) });
+      toast({ title: 'Invalid password' });
       return;
     }
 
+    // Success: clear attempts and log in
+    await Preferences.remove({ key: 'kg_unlock_attempts' });
     await setLoggedIn(true);
     navigate('/home');
   }
@@ -86,8 +103,7 @@ export default function Login() {
       if (!res.isAvailable) return;
       const auth = await Biometric.authenticate({ reason: 'Authenticate to unlock KeyGuard Glow' });
       if (auth.success) {
-        await setLoggedIn(true);
-        navigate('/home');
+        toast({ title: 'Biometric verified', description: 'Please unlock with your password to initialize the secure vault.' });
       }
     } catch (e) {
       toast({ title: 'Biometric not available here', description: 'Use password instead.' });
