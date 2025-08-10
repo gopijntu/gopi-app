@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackButton from '@/components/BackButton';
 import LogoutButton from '@/components/LogoutButton';
@@ -33,6 +33,8 @@ export default function PoliciesEdit() {
       name: String(fd.get('name') || ''),
       renewalDate: String(fd.get('renewalDate') || ''),
       amount: String(fd.get('amount') || ''),
+      insuranceAmount: String(fd.get('insuranceAmount') || ''),
+      insuranceCompany: String(fd.get('insuranceCompany') || ''),
     };
     await updatePolicy(policy.id, data);
     toast({ title: 'Policy updated' });
@@ -56,7 +58,7 @@ export default function PoliciesEdit() {
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" defaultValue={policy.name} required />
+                <Input id="name" name="name" defaultValue={policy.name} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="renewalDate">Renewal Date</Label>
@@ -65,6 +67,14 @@ export default function PoliciesEdit() {
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount</Label>
                 <Input id="amount" name="amount" inputMode="decimal" defaultValue={policy.amount} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="insuranceAmount">Insurance Amount</Label>
+                <Input id="insuranceAmount" name="insuranceAmount" inputMode="decimal" defaultValue={policy.insuranceAmount} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="insuranceCompany">Insurance Company</Label>
+                <Input id="insuranceCompany" name="insuranceCompany" defaultValue={policy.insuranceCompany} />
               </div>
               <div className="sm:col-span-2 flex justify-end">
                 <Button type="submit" variant="glossy">Save Changes</Button>

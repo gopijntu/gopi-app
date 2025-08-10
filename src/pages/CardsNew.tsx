@@ -70,11 +70,11 @@ export default function CardsNew() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cvv">CVV</Label>
-                <Input id="cvv" name="cvv" required inputMode="numeric" />
+                <Input id="cvv" name="cvv" inputMode="numeric" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="validTill">Valid Till</Label>
-                <Input id="validTill" name="validTill" placeholder="MM/YY" required />
+                <Input id="validTill" name="validTill" placeholder="MM/YY" />
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="note">Note</Label>

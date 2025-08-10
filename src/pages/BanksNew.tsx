@@ -50,15 +50,15 @@ export default function BanksNew() {
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="recordName">Name</Label>
-                <Input id="recordName" name="recordName" required />
+                <Input id="recordName" name="recordName" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bankName">Bank Name</Label>
-                <Input id="bankName" name="bankName" required />
+                <Input id="bankName" name="bankName" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="accountNumber">Account Number</Label>
-                <Input id="accountNumber" name="accountNumber" inputMode="numeric" />
+                <Input id="accountNumber" name="accountNumber" inputMode="numeric" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cifNo">CIF No</Label>
@@ -66,11 +66,11 @@ export default function BanksNew() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="ifscCode">IFSC Code</Label>
-                <Input id="ifscCode" name="ifscCode" required />
+                <Input id="ifscCode" name="ifscCode" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
-                <Input id="username" name="username" required />
+                <Input id="username" name="username" />
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="privy">Privy</Label>

@@ -63,6 +63,9 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <footer className="py-6 text-center text-xs text-muted-foreground">
+            Designed &amp; Created by Gopinath Kumbha
+          </footer>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>

@@ -36,7 +36,7 @@ All colors MUST be HSL.
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.875rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -105,17 +105,17 @@ All colors MUST be HSL.
 }
 
 @layer base {
-  :root {
-    --brand: 262 83% 62%;
-    --brand-2: 280 75% 52%;
+:root {
+    --brand: 190 95% 45%; /* vibrant teal */
+    --brand-2: 215 100% 60%; /* neon blue */
     --gradient-primary: linear-gradient(135deg, hsl(var(--brand)) 0%, hsl(var(--brand-2)) 100%);
     --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     --glass-surface: hsl(var(--card) / 0.6);
     --glass-border: hsl(var(--border) / 0.6);
   }
   .dark {
-    --brand: 262 83% 62%;
-    --brand-2: 280 75% 52%;
+    --brand: 190 95% 45%;
+    --brand-2: 215 100% 60%;
     --glass-surface: hsl(var(--card) / 0.35);
     --glass-border: hsl(var(--border) / 0.35);
   }

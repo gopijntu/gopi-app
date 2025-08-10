@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackButton from '@/components/BackButton';
 import LogoutButton from '@/components/LogoutButton';
@@ -65,15 +65,15 @@ export default function BanksEdit() {
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="recordName">Name</Label>
-                <Input id="recordName" name="recordName" defaultValue={bank.recordName} required />
+                <Input id="recordName" name="recordName" defaultValue={bank.recordName} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bankName">Bank Name</Label>
-                <Input id="bankName" name="bankName" defaultValue={bank.bankName} required />
+                <Input id="bankName" name="bankName" defaultValue={bank.bankName} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="accountNumber">Account Number</Label>
-                <Input id="accountNumber" name="accountNumber" defaultValue={bank.accountNumber} />
+                <Input id="accountNumber" name="accountNumber" defaultValue={bank.accountNumber} required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cifNo">CIF No</Label>
@@ -81,11 +81,11 @@ export default function BanksEdit() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="ifscCode">IFSC Code</Label>
-                <Input id="ifscCode" name="ifscCode" defaultValue={bank.ifscCode} required />
+                <Input id="ifscCode" name="ifscCode" defaultValue={bank.ifscCode} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
-                <Input id="username" name="username" defaultValue={bank.username} required />
+                <Input id="username" name="username" defaultValue={bank.username} />
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="privy">Privy</Label>

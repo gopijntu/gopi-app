@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackButton from '@/components/BackButton';
 import LogoutButton from '@/components/LogoutButton';
@@ -77,15 +77,15 @@ export default function CardsEdit() {
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="cardNumber">Card Number</Label>
-                <Input id="cardNumber" name="cardNumber" defaultValue={card.cardNumber} required inputMode="numeric" />
+                 <Input id="cardNumber" name="cardNumber" defaultValue={card.cardNumber} required inputMode="numeric" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cvv">CVV</Label>
-                <Input id="cvv" name="cvv" defaultValue={card.cvv} required inputMode="numeric" />
+                <Input id="cvv" name="cvv" defaultValue={card.cvv} inputMode="numeric" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="validTill">Valid Till</Label>
-                <Input id="validTill" name="validTill" defaultValue={card.validTill} placeholder="MM/YY" required />
+                <Input id="validTill" name="validTill" defaultValue={card.validTill} placeholder="MM/YY" />
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="note">Note</Label>

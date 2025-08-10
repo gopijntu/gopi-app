@@ -64,7 +64,8 @@ export default function PoliciesList() {
                     <TableCell onClick={() => copy(r.name)} className="cursor-pointer">{r.name}</TableCell>
                     <TableCell onClick={() => copy(r.renewalDate)} className="cursor-pointer">{r.renewalDate}</TableCell>
                     <TableCell onClick={() => copy(r.amount)} className="cursor-pointer">{r.amount}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex gap-2">
+                      <Button variant="glossy" size="sm" onClick={() => navigate(`/policies/${r.id}/edit`)}>Edit</Button>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>

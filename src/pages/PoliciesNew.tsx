@@ -24,6 +24,8 @@ export default function PoliciesNew() {
       name: String(fd.get('name') || ''),
       renewalDate: String(fd.get('renewalDate') || ''),
       amount: String(fd.get('amount') || ''),
+      insuranceAmount: String(fd.get('insuranceAmount') || ''),
+      insuranceCompany: String(fd.get('insuranceCompany') || ''),
     };
     await savePolicy(data);
     toast({ title: 'Policy saved' });
@@ -45,7 +47,7 @@ export default function PoliciesNew() {
             <form onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" required />
+                <Input id="name" name="name" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="renewalDate">Renewal Date</Label>
@@ -54,6 +56,14 @@ export default function PoliciesNew() {
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount</Label>
                 <Input id="amount" name="amount" inputMode="decimal" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="insuranceAmount">Insurance Amount</Label>
+                <Input id="insuranceAmount" name="insuranceAmount" inputMode="decimal" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="insuranceCompany">Insurance Company</Label>
+                <Input id="insuranceCompany" name="insuranceCompany" />
               </div>
               <div className="sm:col-span-2 flex justify-end">
                 <Button type="submit" variant="glossy">Save</Button>

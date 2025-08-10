@@ -76,7 +76,8 @@ export default function CardsList() {
                     <TableCell className="cursor-pointer" onClick={() => copy(r.cvv)}>{r.cvv}</TableCell>
                     <TableCell>{r.validTill}</TableCell>
                     <TableCell className="truncate max-w-[200px]">{r.note}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex gap-2">
+                      <Button variant="glossy" size="sm" onClick={() => navigate(`/cards/${r.id}/edit`)}>Edit</Button>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>

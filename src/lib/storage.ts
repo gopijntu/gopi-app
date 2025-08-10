@@ -228,6 +228,8 @@ export type PolicyRecord = {
   name: string;
   renewalDate: string; // ISO or simple string
   amount: string;
+  insuranceAmount?: string;
+  insuranceCompany?: string;
   createdAt: string;
 };
 

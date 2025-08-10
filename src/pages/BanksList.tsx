@@ -72,7 +72,8 @@ export default function BanksList() {
                     <TableCell onClick={() => copy(r.ifscCode)} className="cursor-pointer">{r.ifscCode}</TableCell>
                     <TableCell onClick={() => copy(r.username)} className="cursor-pointer">{r.username}</TableCell>
                     <TableCell onClick={() => copy(r.privy)} className="cursor-pointer truncate max-w-[200px]">{r.privy}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex gap-2">
+                      <Button variant="glossy" size="sm" onClick={() => navigate(`/banks/${r.id}/edit`)}>Edit</Button>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>
