@@ -50,20 +50,24 @@ export default function PoliciesList() {
           </CardHeader>
           <CardContent>
             <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Renewal Date</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Renewal Date</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Insurance Amount</TableHead>
+                <TableHead>Insurance Company</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
               <TableBody>
                 {rows.map((r) => (
                   <TableRow key={r.id}>
                     <TableCell onClick={() => copy(r.name)} className="cursor-pointer">{r.name}</TableCell>
                     <TableCell onClick={() => copy(r.renewalDate)} className="cursor-pointer">{r.renewalDate}</TableCell>
                     <TableCell onClick={() => copy(r.amount)} className="cursor-pointer">{r.amount}</TableCell>
+                    <TableCell onClick={r.insuranceAmount ? () => copy(r.insuranceAmount as string) : undefined} className="cursor-pointer">{r.insuranceAmount || '-'}</TableCell>
+                    <TableCell onClick={r.insuranceCompany ? () => copy(r.insuranceCompany as string) : undefined} className="cursor-pointer">{r.insuranceCompany || '-'}</TableCell>
                     <TableCell className="flex gap-2">
                       <Button variant="glossy" size="sm" onClick={() => navigate(`/policies/${r.id}/edit`)}>Edit</Button>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(r.id)}>Delete</Button>
