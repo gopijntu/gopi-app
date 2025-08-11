@@ -20,19 +20,24 @@ export default function BanksNew() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data = {
-      recordName: String(fd.get('recordName') || ''),
-      bankName: String(fd.get('bankName') || ''),
-      accountNumber: String(fd.get('accountNumber') || ''),
-      cifNo: String(fd.get('cifNo') || ''),
-      ifscCode: String(fd.get('ifscCode') || ''),
-      username: String(fd.get('username') || ''),
-      privy: String(fd.get('privy') || ''),
-    };
-    await saveBank(data);
-    toast({ title: 'Bank record saved' });
-    navigate('/banks');
+    try {
+      const fd = new FormData(e.currentTarget);
+      const data = {
+        recordName: String(fd.get('recordName') || ''),
+        bankName: String(fd.get('bankName') || ''),
+        accountNumber: String(fd.get('accountNumber') || ''),
+        cifNo: String(fd.get('cifNo') || ''),
+        ifscCode: String(fd.get('ifscCode') || ''),
+        username: String(fd.get('username') || ''),
+        privy: String(fd.get('privy') || ''),
+      };
+      await saveBank(data);
+      toast({ title: 'Bank record saved' });
+      navigate('/banks');
+    } catch (err: any) {
+      console.error('Save bank failed', err);
+      toast({ title: 'Save failed', description: err?.message || 'Please unlock the vault and ensure the app runs in a secure WebView.', variant: 'destructive' });
+    }
   }
 
   return (

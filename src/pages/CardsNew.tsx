@@ -21,18 +21,23 @@ export default function CardsNew() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data = {
-      bankName: String(fd.get('bankName') || ''),
-      cardType: String(fd.get('cardType') || ''),
-      cardNumber: String(fd.get('cardNumber') || ''),
-      cvv: String(fd.get('cvv') || ''),
-      validTill: String(fd.get('validTill') || ''),
-      note: String(fd.get('note') || ''),
-    };
-    await saveCard(data);
-    toast({ title: 'Card saved' });
-    navigate('/cards');
+    try {
+      const fd = new FormData(e.currentTarget);
+      const data = {
+        bankName: String(fd.get('bankName') || ''),
+        cardType: String(fd.get('cardType') || ''),
+        cardNumber: String(fd.get('cardNumber') || ''),
+        cvv: String(fd.get('cvv') || ''),
+        validTill: String(fd.get('validTill') || ''),
+        note: String(fd.get('note') || ''),
+      };
+      await saveCard(data);
+      toast({ title: 'Card saved' });
+      navigate('/cards');
+    } catch (err: any) {
+      console.error('Save card failed', err);
+      toast({ title: 'Save failed', description: err?.message || 'Please unlock the vault and ensure the app runs in a secure WebView.', variant: 'destructive' });
+    }
   }
 
   return (

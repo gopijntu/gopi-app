@@ -19,17 +19,22 @@ export default function PoliciesNew() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data = {
-      name: String(fd.get('name') || ''),
-      renewalDate: String(fd.get('renewalDate') || ''),
-      amount: String(fd.get('amount') || ''),
-      insuranceAmount: String(fd.get('insuranceAmount') || ''),
-      insuranceCompany: String(fd.get('insuranceCompany') || ''),
-    };
-    await savePolicy(data);
-    toast({ title: 'Policy saved' });
-    navigate('/policies');
+    try {
+      const fd = new FormData(e.currentTarget);
+      const data = {
+        name: String(fd.get('name') || ''),
+        renewalDate: String(fd.get('renewalDate') || ''),
+        amount: String(fd.get('amount') || ''),
+        insuranceAmount: String(fd.get('insuranceAmount') || ''),
+        insuranceCompany: String(fd.get('insuranceCompany') || ''),
+      };
+      await savePolicy(data);
+      toast({ title: 'Policy saved' });
+      navigate('/policies');
+    } catch (err: any) {
+      console.error('Save policy failed', err);
+      toast({ title: 'Save failed', description: err?.message || 'Please unlock the vault and ensure the app runs in a secure WebView.', variant: 'destructive' });
+    }
   }
 
   return (
