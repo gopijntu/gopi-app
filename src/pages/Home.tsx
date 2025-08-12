@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LogoutButton from '@/components/LogoutButton';
-import { Banknote, CreditCard, ShieldCheck, IdCard } from 'lucide-react';
+import { Banknote, CreditCard, ShieldCheck, IdCard, Settings as SettingsIcon } from 'lucide-react';
 import { isLoggedIn } from '@/lib/storage';
 
 export default function Home() {
@@ -37,6 +37,10 @@ export default function Home() {
           <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/aadhars')}>
             <IdCard className="size-7" />
             Aadhar Cards
+          </Button>
+          <Button variant="secondary" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/settings')}>
+            <SettingsIcon className="size-7" />
+            Settings
           </Button>
         </div>
       </div>

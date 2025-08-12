@@ -24,6 +24,7 @@ import InactivityLogout from "@/components/InactivityLogout";
 import AadharsList from "@/pages/AadharsList";
 import AadharsNew from "@/pages/AadharsNew";
 import AadharsEdit from "@/pages/AadharsEdit";
+import Settings from "@/pages/Settings";
 const queryClient = new QueryClient();
 
 function StartGate() {
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/aadhars" element={<AadharsList />} />
             <Route path="/aadhars/new" element={<AadharsNew />} />
             <Route path="/aadhars/:id/edit" element={<AadharsEdit />} />
+            <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
