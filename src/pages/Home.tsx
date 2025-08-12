@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LogoutButton from '@/components/LogoutButton';
-import { Banknote, CreditCard, ShieldCheck } from 'lucide-react';
+import { Banknote, CreditCard, ShieldCheck, IdCard } from 'lucide-react';
 import { isLoggedIn } from '@/lib/storage';
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex justify-end"><LogoutButton /></div>
         <h1 className="text-3xl font-semibold">KeyGuard Glow</h1>
         <p className="text-muted-foreground">Securely manage your bank, card, and policy details</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/banks')}>
             <Banknote className="size-7" />
             Banks
@@ -33,6 +33,10 @@ export default function Home() {
           <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/policies')}>
             <ShieldCheck className="size-7" />
             Policies
+          </Button>
+          <Button variant="glossy" size="xl" className="h-28 flex flex-col hover-scale" onClick={() => navigate('/aadhars')}>
+            <IdCard className="size-7" />
+            Aadhar Cards
           </Button>
         </div>
       </div>

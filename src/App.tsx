@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Onboarding from "@/pages/Onboarding";
@@ -21,6 +21,9 @@ import Recover from "@/pages/Recover";
 import NotFound from "./pages/NotFound";
 import { hasVaultSetup, isLoggedIn, isVaultUnlocked } from "@/lib/storage";
 import InactivityLogout from "@/components/InactivityLogout";
+import AadharsList from "@/pages/AadharsList";
+import AadharsNew from "@/pages/AadharsNew";
+import AadharsEdit from "@/pages/AadharsEdit";
 const queryClient = new QueryClient();
 
 function StartGate() {
@@ -37,6 +40,14 @@ function StartGate() {
   return null;
 }
 
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -45,6 +56,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <InactivityLogout />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<StartGate />} />
             <Route path="/onboarding" element={<Onboarding />} />
@@ -60,6 +72,9 @@ const App = () => (
             <Route path="/policies" element={<PoliciesList />} />
             <Route path="/policies/new" element={<PoliciesNew />} />
             <Route path="/policies/:id/edit" element={<PoliciesEdit />} />
+            <Route path="/aadhars" element={<AadharsList />} />
+            <Route path="/aadhars/new" element={<AadharsNew />} />
+            <Route path="/aadhars/:id/edit" element={<AadharsEdit />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

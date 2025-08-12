@@ -24,11 +24,20 @@ export type CardRecord = {
   createdAt: string;
 };
 
+export type AadharRecord = {
+  id: string;
+  name?: string;
+  aadharNumber: string;
+  address?: string;
+  createdAt: string;
+};
+
 const KEYS = {
   MASTER_HASH: 'kg_master_hash',
   LOGGED_IN: 'kg_logged_in',
   BANKS: 'kg_banks',
   CARDS: 'kg_cards',
+  AADHARS: 'kg_aadhars',
   POLICIES: 'kg_policies',
   QUESTIONS: 'kg_questions', // { q1, q2 }
   SALT_PW: 'kg_salt_pw',
@@ -233,6 +242,38 @@ export async function deleteCard(id: string) {
   await writeEncryptedJSON(KEYS.CARDS, next);
 }
 
+// Aadhar Cards
+export async function getAadhars(): Promise<AadharRecord[]> {
+  return readEncryptedJSON<AadharRecord[]>(KEYS.AADHARS, []);
+}
+
+export async function saveAadhar(rec: Omit<AadharRecord, 'id' | 'createdAt'>) {
+  const list = await getAadhars();
+  const next: AadharRecord = {
+    ...rec,
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+  };
+  list.unshift(next);
+  await writeEncryptedJSON(KEYS.AADHARS, list);
+  return next;
+}
+
+export async function updateAadhar(id: string, rec: Omit<AadharRecord, 'id' | 'createdAt'>) {
+  const list = await getAadhars();
+  const idx = list.findIndex((a) => a.id === id);
+  if (idx === -1) return;
+  const updated: AadharRecord = { ...list[idx], ...rec };
+  list[idx] = updated;
+  await writeEncryptedJSON(KEYS.AADHARS, list);
+}
+
+export async function deleteAadhar(id: string) {
+  const list = await getAadhars();
+  const next = list.filter((r) => r.id !== id);
+  await writeEncryptedJSON(KEYS.AADHARS, next);
+}
+
 // Policies
 export type PolicyRecord = {
   id: string;
@@ -280,6 +321,7 @@ export async function resetAllData() {
   await Preferences.remove({ key: KEYS.LOGGED_IN });
   await Preferences.remove({ key: KEYS.BANKS });
   await Preferences.remove({ key: KEYS.CARDS });
+  await Preferences.remove({ key: KEYS.AADHARS });
   await Preferences.remove({ key: KEYS.POLICIES });
   await Preferences.remove({ key: KEYS.QUESTIONS });
   await Preferences.remove({ key: KEYS.SALT_PW });
