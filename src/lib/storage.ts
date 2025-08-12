@@ -65,8 +65,8 @@ export async function setLoggedIn(flag: boolean) {
 
 export async function isLoggedIn(): Promise<boolean> {
   const { value } = await Preferences.get({ key: KEYS.LOGGED_IN });
-  // Consider user logged in only if vault is unlocked in-memory
-  return value === '1' && isVaultUnlocked();
+  // Treat persisted session flag as source of truth; vault may need re-unlock separately
+  return value === '1';
 }
 
 export function lockVault() {
