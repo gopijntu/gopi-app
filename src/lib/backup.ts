@@ -19,6 +19,7 @@ const PREF_KEYS = [
   'kg_salt_qa',
   'kg_wrapped_key_pw',
   'kg_wrapped_key_qa',
+  'kg_session_dk',
 ];
 
 async function ensurePermissions() {

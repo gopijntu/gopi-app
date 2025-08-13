@@ -25,6 +25,8 @@ import AadharsList from "@/pages/AadharsList";
 import AadharsNew from "@/pages/AadharsNew";
 import AadharsEdit from "@/pages/AadharsEdit";
 import Settings from "@/pages/Settings";
+import RequireAuth from "@/components/RequireAuth";
+import AutoUnlock from "@/components/AutoUnlock";
 const queryClient = new QueryClient();
 
 function StartGate() {
@@ -57,26 +59,27 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <InactivityLogout />
+          <AutoUnlock />
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<StartGate />} />
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/login" element={<Login />} />
             <Route path="/recover" element={<Recover />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/banks" element={<BanksList />} />
-            <Route path="/banks/new" element={<BanksNew />} />
-            <Route path="/banks/:id/edit" element={<BanksEdit />} />
-            <Route path="/cards" element={<CardsList />} />
-            <Route path="/cards/new" element={<CardsNew />} />
-            <Route path="/cards/:id/edit" element={<CardsEdit />} />
-            <Route path="/policies" element={<PoliciesList />} />
-            <Route path="/policies/new" element={<PoliciesNew />} />
-            <Route path="/policies/:id/edit" element={<PoliciesEdit />} />
-            <Route path="/aadhars" element={<AadharsList />} />
-            <Route path="/aadhars/new" element={<AadharsNew />} />
-            <Route path="/aadhars/:id/edit" element={<AadharsEdit />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
+            <Route path="/banks" element={<RequireAuth><BanksList /></RequireAuth>} />
+            <Route path="/banks/new" element={<RequireAuth><BanksNew /></RequireAuth>} />
+            <Route path="/banks/:id/edit" element={<RequireAuth><BanksEdit /></RequireAuth>} />
+            <Route path="/cards" element={<RequireAuth><CardsList /></RequireAuth>} />
+            <Route path="/cards/new" element={<RequireAuth><CardsNew /></RequireAuth>} />
+            <Route path="/cards/:id/edit" element={<RequireAuth><CardsEdit /></RequireAuth>} />
+            <Route path="/policies" element={<RequireAuth><PoliciesList /></RequireAuth>} />
+            <Route path="/policies/new" element={<RequireAuth><PoliciesNew /></RequireAuth>} />
+            <Route path="/policies/:id/edit" element={<RequireAuth><PoliciesEdit /></RequireAuth>} />
+            <Route path="/aadhars" element={<RequireAuth><AadharsList /></RequireAuth>} />
+            <Route path="/aadhars/new" element={<RequireAuth><AadharsNew /></RequireAuth>} />
+            <Route path="/aadhars/:id/edit" element={<RequireAuth><AadharsEdit /></RequireAuth>} />
+            <Route path="/settings" element={<RequireAuth><Settings /></RequireAuth>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

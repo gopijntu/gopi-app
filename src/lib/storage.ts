@@ -44,6 +44,7 @@ const KEYS = {
   SALT_QA: 'kg_salt_qa',
   WRAPPED_KEY_PW: 'kg_wrapped_key_pw', // JSON {iv, cipher}
   WRAPPED_KEY_QA: 'kg_wrapped_key_qa', // JSON {iv, cipher}
+  SESSION_DK: 'kg_session_dk', // session data key (base64) for seamless refresh
 };
 
 // In-memory unlocked data key
@@ -61,6 +62,9 @@ export async function getMasterHash(): Promise<string | null> {
 
 export async function setLoggedIn(flag: boolean) {
   await Preferences.set({ key: KEYS.LOGGED_IN, value: flag ? '1' : '0' });
+  if (!flag) {
+    await Preferences.remove({ key: KEYS.SESSION_DK });
+  }
 }
 
 export async function isLoggedIn(): Promise<boolean> {
@@ -120,6 +124,7 @@ export async function unlockVaultWithPassword(password: string): Promise<boolean
     const wrap = JSON.parse(wrapPwStr);
     const dkB64 = await decryptStringWithKey(pwKey, wrap.iv, wrap.cipher);
     dataKey = await importAesKeyFromBase64(dkB64);
+    await Preferences.set({ key: KEYS.SESSION_DK, value: dkB64 });
     return true;
   } catch {
     dataKey = null;
@@ -136,6 +141,7 @@ export async function unlockVaultWithAnswers(a1: string, a2: string): Promise<bo
     const wrap = JSON.parse(wrapQaStr);
     const dkB64 = await decryptStringWithKey(qaKey, wrap.iv, wrap.cipher);
     dataKey = await importAesKeyFromBase64(dkB64);
+    await Preferences.set({ key: KEYS.SESSION_DK, value: dkB64 });
     return true;
   } catch {
     dataKey = null;
@@ -158,7 +164,22 @@ export async function changePasswordWithAnswers(newPassword: string, a1: string,
   return true;
 }
 
+export async function ensureSessionUnlock(): Promise<boolean> {
+  if (dataKey) return true;
+  const { value } = await Preferences.get({ key: KEYS.SESSION_DK });
+  if (!value) return false;
+  try {
+    dataKey = await importAesKeyFromBase64(value);
+    return true;
+  } catch {
+    dataKey = null;
+    return false;
+  }
+}
 async function readEncryptedJSON<T>(key: string, fallback: T): Promise<T> {
+  if (!dataKey) {
+    await ensureSessionUnlock();
+  }
   if (!dataKey) return fallback;
   const { value } = await Preferences.get({ key });
   if (!value) return fallback;
@@ -328,5 +349,6 @@ export async function resetAllData() {
   await Preferences.remove({ key: KEYS.SALT_QA });
   await Preferences.remove({ key: KEYS.WRAPPED_KEY_PW });
   await Preferences.remove({ key: KEYS.WRAPPED_KEY_QA });
+  await Preferences.remove({ key: KEYS.SESSION_DK });
   dataKey = null;
 }
