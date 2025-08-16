@@ -2,20 +2,23 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  // The missing comma has been added here.
-  base: '/gopi-app/',
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
-    react(),
-  ].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+// Get repo name from package.json or default to "/"
+import pkg from "./package.json";
+
+export default defineConfig(({ mode }) => {
+  const repoName = pkg.name || ""; // usually same as your GitHub repo
+  return {
+    // This makes base path always match repo name automatically
+    base: `/${repoName}/`,
+    server: {
+      host: "::",
+      port: 8080,
     },
-  },
-}));
+    plugins: [react()],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
+  };
+});
