@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Onboarding from "@/pages/Onboarding";
@@ -57,7 +57,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <HashRouter>
           <InactivityLogout />
           <AutoUnlock />
           <ScrollToTop />
@@ -86,7 +86,7 @@ const App = () => (
           <footer className="py-6 text-center text-xs text-muted-foreground">
             Designed &amp; Created by Gopinath Kumbha
           </footer>
-        </BrowserRouter>
+        </HashRouter>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

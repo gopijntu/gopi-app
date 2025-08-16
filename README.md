@@ -53,3 +53,17 @@ To build the Android application, follow these steps after setting up your local
     ```
 4.  **Build the APK in Android Studio:**
     -   Once the project is open in Android Studio, you can build the APK using the `Build > Build Bundle(s) / APK(s) > Build APK(s)` menu.
+
+## How to deploy to GitHub Pages
+
+This project can be deployed to GitHub Pages to create a shareable web link.
+
+1.  **Configure the `base` path:**
+    -   Before deploying, open `vite.config.ts` and make sure the `base` property matches the name of your GitHub repository. For example, if your repository URL is `https://github.com/your-username/your-repo-name`, the `base` should be set to `'/your-repo-name/'`.
+
+2.  **Deploy:**
+    -   Run the following command to build the application and deploy it to GitHub Pages:
+        ```bash
+        npm run deploy
+        ```
+    -   This command will create a `gh-pages` branch in your repository and push the built application to it. You may need to enable GitHub Pages in your repository settings to use this branch as the source.
