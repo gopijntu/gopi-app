@@ -4,7 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-   base: '/gopi-app/'
+  // The missing comma has been added here.
+  base: '/gopi-app/',
   server: {
     host: "::",
     port: 8080,
