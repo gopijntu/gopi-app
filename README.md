@@ -1,22 +1,21 @@
-# Welcome to your Lovable project
+# KeyGuard Glow
 
-## Project info
+This project is a secure, offline-first password vault for managing bank and card details.
 
-**URL**: https://lovable.dev/projects/516a93f2-3725-44fd-b7b5-a519b96a15e5
+## What technologies are used for this project?
 
-## How can I edit this code?
+This project is built with:
 
-There are several ways of editing your application.
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+- Capacitor
 
-**Use Lovable**
+## How to work with this project locally
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/516a93f2-3725-44fd-b7b5-a519b96a15e5) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -36,38 +35,21 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## How to build for Android
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+To build the Android application, follow these steps after setting up your local environment:
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/516a93f2-3725-44fd-b7b5-a519b96a15e5) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1.  **Build the web assets:**
+    ```bash
+    npm run build
+    ```
+2.  **Sync the assets with the Android project:**
+    ```bash
+    npx cap sync android
+    ```
+3.  **Open the project in Android Studio:**
+    ```bash
+    npx cap open android
+    ```
+4.  **Build the APK in Android Studio:**
+    -   Once the project is open in Android Studio, you can build the APK using the `Build > Build Bundle(s) / APK(s) > Build APK(s)` menu.
