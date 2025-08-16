@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.life.app.data.AppDatabase
 import com.life.app.data.DatabaseHolder
-import com.life.app.data.UserCredentials
+import com.life.app.data.model.UserCredentials
 import com.life.app.databinding.ActivityOnboardingBinding
 import com.life.app.home.HomeActivity
 import com.life.app.utils.SecurityUtils

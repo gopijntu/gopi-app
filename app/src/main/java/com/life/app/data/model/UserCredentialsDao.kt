@@ -1,4 +1,4 @@
-package com.life.app.data
+package com.life.app.data.model
 
 import androidx.room.Dao
 import androidx.room.Insert
