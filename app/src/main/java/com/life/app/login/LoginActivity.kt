@@ -24,8 +24,6 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             handlePasswordLogin()
         }
-
-        }
     }
 
     private fun handlePasswordLogin() {
